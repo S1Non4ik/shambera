@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
-from dtb.dtb import *
+from dtb import *
 from tkinter import ttk
 
 query = """
@@ -47,6 +47,7 @@ def main():
 
     root.mainloop()
 
+
 def admin_menu():
     def add_data(data_type):
         def submit_data():
@@ -80,8 +81,15 @@ def admin_menu():
         data_window.title(f"Пополнить {'базу знаний' if data_type == 'knowledge' else 'main'}")
 
         entries = []
-        for i in range(5):
-            label = tk.Label(data_window, text=f"Поле {i + 1}:")
+        field_names = []
+
+        if data_type == "knowledge":
+            field_names = ["Энергия", "Время", "Размеры", "Преимущества", "Модель"]
+        elif data_type == "assortment":
+            field_names = ["Бренд", "Модель", "Цена", "Объем", "Год"]
+
+        for i, field_name in enumerate(field_names):
+            label = tk.Label(data_window, text=f"{field_name}:")
             label.pack()
             entry = tk.Entry(data_window)
             entry.pack()
@@ -93,7 +101,6 @@ def admin_menu():
     root = tk.Tk()
     root.title("Меню администратора")
     root.geometry("300x300")
-
 
     knowledge_button = tk.Button(root, text="Пополнить базу знаний", command=lambda: add_data("knowledge"))
     knowledge_button.pack(pady=10)
